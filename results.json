@@ -1,5 +1,5 @@
 {
-  "time": "2026-07-22 21:16:03",
+  "time": "2026-07-22 14:21:46",
   "data_date": "2026-07-22",
   "regime": "bear",
   "regime_label": "🔴 熊市",
@@ -83,5 +83,5 @@
       "reason": "得分≤0"
     }
   ],
-  "elapsed_sec": 0.1
+  "elapsed_sec": 23.9
 }
