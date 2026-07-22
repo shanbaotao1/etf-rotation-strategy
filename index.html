@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETF动量轮动 · 选股面板</title>
+<style>
+:root {
+  --bull:#22c55e;--bear:#ef4444;--sideways:#f59e0b;
+  --bg:#0f172a;--card:#1e293b;--border:#334155;
+  --text:#e2e8f0;--text2:#94a3b8;--accent:#3b82f6;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"Microsoft YaHei",sans-serif;padding:20px;min-height:100vh}
+.container{max-width:1100px;margin:0 auto}
+h1{font-size:1.6rem;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.subtitle{color:var(--text2);font-size:0.82rem;margin-bottom:18px}
+.top-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:20px;font-weight:700;font-size:0.85rem}
+.badge.bull{background:#166534;color:#86efac}
+.badge.bear{background:#7f1d1d;color:#fca5a5}
+.badge.sideways{background:#78350f;color:#fcd34d}
+.chip{background:var(--card);border:1px solid var(--border);padding:5px 13px;border-radius:20px;font-size:0.82rem;color:var(--text2)}
+.chip strong{color:var(--text)}
+.btn{background:var(--accent);color:#fff;border:none;padding:7px 16px;border-radius:20px;cursor:pointer;font-size:0.82rem;text-decoration:none}
+.btn:hover{opacity:0.85}
+.btn.ghost{background:var(--card);border:1px solid var(--border);color:var(--text)}
+
+.hero{background:linear-gradient(135deg,#1e3a5f,#1e293b);border:1px solid var(--border);border-radius:16px;padding:26px 30px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.hero-left h2{font-size:0.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text2);margin-bottom:4px}
+.hero-left .stock{font-size:1.9rem;font-weight:800}
+.hero-left .stock .code{font-size:0.95rem;color:var(--text2);font-weight:400;margin-left:8px}
+.hero-right{text-align:right}
+.hero-right .label{font-size:0.72rem;color:var(--text2)}
+.hero-right .val{font-size:1.35rem;font-weight:700}
+.hero-right .val.sub{font-size:1.05rem}
+
+.section{margin-bottom:22px}
+.section h3{font-size:0.95rem;margin-bottom:8px;color:var(--text2);text-transform:uppercase;letter-spacing:.04em}
+table{width:100%;border-collapse:collapse;font-size:0.83rem}
+th{text-align:left;padding:9px 10px;color:var(--text2);font-weight:500;border-bottom:2px solid var(--border);font-size:0.78rem}
+td{padding:9px 10px;border-bottom:1px solid rgba(51,65,85,0.5)}
+tr:hover{background:rgba(59,130,246,0.04)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:768px){.grid2{grid-template-columns:1fr}}
+.excluded-list{max-height:380px;overflow-y:auto}
+.excluded-item{padding:5px 8px;font-size:0.78rem;border-bottom:1px solid rgba(51,65,85,0.3);display:flex;justify-content:space-between}
+.excluded-item .reason{color:var(--text2)}
+.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:0.73rem}
+.tag-green{background:#166534;color:#86efac}
+.tag-red{background:#7f1d1d;color:#fca5a5}
+.tag-gray{background:var(--card);color:var(--text2)}
+
+.loading{text-align:center;padding:80px 20px;color:var(--text2)}
+.spinner{display:inline-block;width:44px;height:44px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.error-state{text-align:center;padding:60px 20px}
+.error-state .icon{font-size:3rem;margin-bottom:12px}
+.footer{text-align:center;color:var(--text2);font-size:0.73rem;padding:18px 0;border-top:1px solid var(--border);margin-top:28px}
+.footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📊 ETF动量轮动 · 选股面板</h1>
+  <div class="subtitle" id="updateInfo">加载中…</div>
+
+  <div id="loadingState" class="loading">
+    <div class="spinner"></div>
+    <div>正在加载数据…</div>
+  </div>
+
+  <div id="errorState" class="error-state" style="display:none">
+    <div class="icon">📡</div>
+    <h2>暂无数据</h2>
+    <div style="color:var(--text2);margin:10px 0 20px;" id="errorMsg">策略数据尚未生成，请稍后重试。</div>
+    <button class="btn" onclick="location.reload()">🔄 重试</button>
+  </div>
+
+  <div id="mainContent" style="display:none">
+    <!-- 顶部状态 -->
+    <div class="top-bar">
+      <span class="badge" id="regimeBadge"></span>
+      <span class="chip">得分上限 <strong id="maxScore"></strong></span>
+      <span class="chip">动量窗口 <strong id="momentumDays"></strong>天</span>
+      <span class="chip">数据日期 <strong id="dataDate"></strong></span>
+      <span class="chip">刷新时间 <strong id="refreshTime"></strong></span>
+      <span class="chip">价格 <strong id="priceType">收盘价</strong></span>
+      <button class="btn" onclick="location.reload()">🔄 刷新</button>
+    </div>
+
+    <!-- 头号标的 -->
+    <div class="hero" id="heroCard">
+      <div class="hero-left">
+        <h2>⭐ 今日首选</h2>
+        <div class="stock"><span id="topName">-</span><span class="code" id="topCode"></span></div>
+        <div style="margin-top:2px;color:var(--text2);font-size:0.82rem">价格 <span id="topPrice">-</span> 元</div>
+      </div>
+      <div class="hero-right">
+        <div class="label">动量得分</div>
+        <div class="val" style="color:var(--accent);" id="topScore">-</div>
+        <div class="label">年化收益</div>
+        <div class="val sub" id="topAnn">-</div>
+        <div class="label">R²趋势质量</div>
+        <div class="val sub" id="topR2">-</div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <!-- 排名表 -->
+      <div class="section">
+        <h3>🏆 候选排名（<span id="eligibleCount">0</span>只入选）</h3>
+        <table>
+          <thead><tr><th>#</th><th>代码</th><th>名称</th><th>得分</th><th>年化</th><th>R²</th><th>价格</th></tr></thead>
+          <tbody id="eligibleBody"></tbody>
+        </table>
+        <div id="noEligible" style="display:none;text-align:center;color:var(--text2);padding:24px;">
+          🛡️ 无合格标的 — 建议持有 <strong>银华日利 (511880)</strong>
+        </div>
+      </div>
+
+      <!-- 排除 + 参数 -->
+      <div>
+        <div class="section">
+          <h3>🚫 排除清单（<span id="excludedCount">0</span>只）</h3>
+          <div class="excluded-list" id="excludedList"></div>
+        </div>
+        <div class="section" style="margin-top:14px">
+          <h3>📐 策略参数</h3>
+          <table id="paramTable"></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      ETF动量轮动策略 · 数据源：AkShare/Sina · 极空间备份方案 ·
+      <span id="footerTime"></span> ·
+      <a href="https://github.com">GitHub Actions 自动更新</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const REGIME_ICONS = { bull:'🟢 牛市', bear:'🔴 熊市', sideways:'🟡 震荡市' };
+const REGIME_CLASS = { bull:'bull', bear:'bear', sideways:'sideways' };
+
+async function load() {
+  try {
+    const resp = await fetch('results.json');
+    if (!resp.ok) throw new Error('数据文件不存在');
+    const data = await resp.json();
+    render(data);
+  } catch(e) {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').style.display = 'block';
+    document.getElementById('errorMsg').textContent = '数据尚未生成（需运行 compute.py）。首次部署后等待 GitHub Actions 自动运行。';
+  }
+}
+
+function render(data) {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+
+  // 更新信息
+  document.getElementById('updateInfo').textContent =
+    `29只ETF | 单只满仓 | 熊市避险池 | 动态动量窗口 | 防御ETF兜底 | 耗时${data.elapsed_sec || '?'}秒`;
+
+  // 状态栏
+  const badge = document.getElementById('regimeBadge');
+  badge.textContent = REGIME_ICONS[data.regime] || data.regime_label || data.regime;
+  badge.className = 'badge ' + (REGIME_CLASS[data.regime] || '');
+  document.getElementById('maxScore').textContent = data.max_score;
+  document.getElementById('momentumDays').textContent = data.momentum_days;
+  document.getElementById('dataDate').textContent = data.data_date;
+  document.getElementById('refreshTime').textContent = data.time;
+  document.getElementById('priceType').textContent = data.price_type || '收盘价';
+  document.getElementById('footerTime').textContent = '最后更新：' + data.time;
+
+  // 头号标的
+  const top = data.top_pick;
+  const hero = document.getElementById('heroCard');
+  if (top) {
+    document.getElementById('topName').textContent = top.name;
+    document.getElementById('topCode').textContent = top.code;
+    document.getElementById('topPrice').textContent = top.price.toFixed(3);
+    document.getElementById('topScore').textContent = top.score.toFixed(4);
+    document.getElementById('topAnn').textContent = (top.ann*100).toFixed(1) + '%';
+    document.getElementById('topR2').textContent = top.r2.toFixed(3);
+    hero.style.display = '';
+  } else {
+    hero.innerHTML = '<div style="text-align:center;width:100%;padding:20px;"><h2>🛡️ 无合格标的</h2><div style="color:var(--text2);margin-top:4px;">建议持有防御ETF：银华日利 (511880)</div></div>';
+  }
+
+  // 候选表
+  document.getElementById('eligibleCount').textContent = data.eligible.length;
+  const tbody = document.getElementById('eligibleBody');
+  if (data.eligible.length > 0) {
+    tbody.innerHTML = data.eligible.map((e,i) => `
+      <tr>
+        <td style="color:var(--text2)">${i+1}</td>
+        <td style="font-family:monospace;font-size:0.78rem">${e.code}</td>
+        <td>${e.name}</td>
+        <td style="font-weight:700">${e.score.toFixed(4)}</td>
+        <td style="color:${e.ann>0?'#86efac':'#fca5a5'}">${(e.ann*100).toFixed(1)}%</td>
+        <td>${e.r2.toFixed(3)}</td>
+        <td style="font-family:monospace">${e.price.toFixed(3)}</td>
+      </tr>`).join('');
+    document.getElementById('noEligible').style.display = 'none';
+  } else {
+    tbody.innerHTML = '';
+    document.getElementById('noEligible').style.display = '';
+  }
+
+  // 排除清单
+  document.getElementById('excludedCount').textContent = data.excluded.length;
+  document.getElementById('excludedList').innerHTML = data.excluded.map(e => `
+    <div class="excluded-item">
+      <span><span style="font-family:monospace;font-size:0.78rem">${e.code}</span> ${e.name}${e.score!==0?` <span style="color:var(--text2)">(${e.score.toFixed(4)})</span>`:''}</span>
+      <span class="reason">${e.reason}</span>
+    </div>`).join('') || '<div style="color:var(--text2);text-align:center;padding:20px">全部通过筛选 ✅</div>';
+
+  // 参数表
+  const regimeTag = REGIME_CLASS[data.regime] || '';
+  const regimeTagCls = data.regime==='bull'?'tag-green':data.regime==='bear'?'tag-red':'tag-gray';
+  document.getElementById('paramTable').innerHTML = `
+    <tr><td>市场状态</td><td><span class="tag ${regimeTagCls}">${REGIME_ICONS[data.regime]||data.regime}</span></td></tr>
+    <tr><td>分数上限</td><td><strong>${data.max_score}分</strong></td></tr>
+    <tr><td>动量窗口</td><td><strong>${data.momentum_days}天</strong></td></tr>
+    <tr><td>全池R²中位数</td><td><strong>${(data.r2_median||0).toFixed(4)}</strong></td></tr>
+    <tr><td>候选池</td><td>${data.use_weak_pool?`<span class="tag tag-red">避险池（${data.global_pool_count}只）</span>`:`<span class="tag tag-green">全池（${data.pool_count}只）</span>`}</td></tr>
+    <tr><td>持仓模式</td><td>单只满仓</td></tr>
+    <tr><td>防御兜底</td><td>${data.use_defensive?'✅ 银华日利(511880)':'❌ 无'}</td></tr>
+    <tr><td>价格类型</td><td>${data.price_type||'收盘价'}</td></tr>
+  `;
+}
+
+load();
+</script>
+</body>
+</html>
