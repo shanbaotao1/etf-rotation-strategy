@@ -175,12 +175,12 @@ def get_regime(kline_data):
     for pc in PROXIES:
         recs = kline_data.get(pc, [])
         closes = [r['close'] for r in recs if r.get('close', 0) > 0]
-        if len(closes) >= 30:
-            ma20 = sum(closes[-20:]) / 20
-            ma20_p = sum(closes[-21:-1]) / 20
-            if closes[-1] > ma20:
+        if len(closes) >= 70:
+            ma60 = sum(closes[-60:]) / 60
+            ma60_p = sum(closes[-61:-1]) / 60
+            if closes[-1] > ma60:
                 abv += 1
-                if ma20 > ma20_p * 1.001:
+                if ma60 > ma60_p * 1.001:
                     up += 1
             else:
                 blw += 1
