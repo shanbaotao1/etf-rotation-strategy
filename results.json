@@ -1,11 +1,11 @@
 {
-  "time": "2026-08-04 07:57:34",
-  "data_date": "2026-08-04",
+  "time": "2026-08-05 15:14:07",
+  "data_date": "2026-08-05",
   "regime": "bear",
   "regime_label": "🔴 熊市",
   "max_score": 3,
   "momentum_days": 25,
-  "r2_median": 0.621414,
+  "r2_median": 0.54179,
   "use_weak_pool": true,
   "global_pool_count": 9,
   "pool_count": 29,
@@ -14,80 +14,78 @@
   "top_pick": {
     "code": "563020.XSHG",
     "name": "红利低波ETF",
-    "score": 1.942132,
-    "ann": 2.040952,
-    "r2": 0.951581,
-    "price": 1.196
+    "score": 1.388035,
+    "ann": 1.565974,
+    "r2": 0.886372,
+    "price": 1.172
   },
   "eligible": [
     {
       "code": "563020.XSHG",
       "name": "红利低波ETF",
-      "score": 1.942132,
-      "ann": 2.040952,
-      "r2": 0.951581,
-      "price": 1.196
+      "score": 1.388035,
+      "ann": 1.565974,
+      "r2": 0.886372,
+      "price": 1.172
     },
     {
       "code": "159980.XSHE",
       "name": "有色ETF",
-      "score": 0.360903,
-      "ann": 0.437087,
-      "r2": 0.825703,
-      "price": 2.123
+      "score": 0.42321,
+      "ann": 0.49964,
+      "r2": 0.847031,
+      "price": 2.138
     },
     {
       "code": "511090.XSHG",
       "name": "30年国债ETF",
-      "score": 0.154138,
-      "ann": 0.211492,
-      "r2": 0.728812,
-      "price": 118.311
+      "score": 0.19242,
+      "ann": 0.240427,
+      "r2": 0.800323,
+      "price": 118.475
     },
     {
       "code": "511260.XSHG",
       "name": "10年国债ETF",
-      "score": 0.044713,
-      "ann": 0.049593,
-      "r2": 0.901607,
-      "price": 135.379
+      "score": 0.05065,
+      "ann": 0.055086,
+      "r2": 0.919477,
+      "price": 135.45
     },
     {
       "code": "513030.XSHG",
       "name": "德国ETF",
-      "score": 0.006106,
-      "ann": 0.188385,
-      "r2": 0.032413,
-      "price": 1.837
-    },
-    {
-      "code": "159985.XSHE",
-      "name": "豆粕ETF",
-      "score": 0.000102,
-      "ann": 0.014225,
-      "r2": 0.007143,
-      "price": 2.094
+      "score": 0.028893,
+      "ann": 0.342588,
+      "r2": 0.084338,
+      "price": 1.859
     }
   ],
   "excluded": [
     {
       "code": "513100.XSHG",
       "name": "纳指ETF",
-      "score": -0.218432,
+      "score": -0.033875,
       "reason": "得分≤0"
     },
     {
       "code": "513520.XSHG",
       "name": "日经ETF",
-      "score": -0.588016,
+      "score": -0.457359,
       "reason": "得分≤0"
+    },
+    {
+      "code": "159985.XSHE",
+      "name": "豆粕ETF",
+      "score": 0.002801,
+      "reason": "R²≤0(-0.0201)"
     },
     {
       "code": "518880.XSHG",
       "name": "黄金ETF",
-      "score": -0.009116,
+      "score": -0.016026,
       "reason": "得分≤0"
     }
   ],
-  "elapsed_sec": 25.4
+  "elapsed_sec": 28.5
 }
