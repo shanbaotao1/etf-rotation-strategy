@@ -1,6 +1,6 @@
 {
-  "time": "2026-08-28 17:29:05",
-  "data_date": "2026-08-28",
+  "time": "2026-08-31 11:39:48",
+  "data_date": "2026-08-31",
   "regime": "bear",
   "regime_label": "🔴 熊市",
   "max_score": 3,
@@ -93,5 +93,5 @@
       "reason": "R²≤0(-0.0024)"
     }
   ],
-  "elapsed_sec": 23.0
+  "elapsed_sec": 25.7
 }
