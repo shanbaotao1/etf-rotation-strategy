@@ -1,6 +1,6 @@
 {
-  "time": "2026-10-02 11:10:13",
-  "data_date": "2026-10-02",
+  "time": "2026-10-05 12:22:04",
+  "data_date": "2026-10-05",
   "regime": "bear",
   "regime_label": "🔴 熊市",
   "max_score": 3,
@@ -83,5 +83,5 @@
       "reason": "得分≤0"
     }
   ],
-  "elapsed_sec": 20.4
+  "elapsed_sec": 21.7
 }
