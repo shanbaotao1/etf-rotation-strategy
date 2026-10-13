@@ -1,11 +1,11 @@
 {
-  "time": "2026-10-12 13:16:22",
-  "data_date": "2026-10-12",
+  "time": "2026-10-13 12:47:01",
+  "data_date": "2026-10-13",
   "regime": "bear",
   "regime_label": "🔴 熊市",
   "max_score": 3,
   "momentum_days": 25,
-  "r2_median": 0.646346,
+  "r2_median": 0.621564,
   "use_weak_pool": true,
   "global_pool_count": 9,
   "pool_count": 29,
@@ -14,42 +14,42 @@
   "top_pick": {
     "code": "513100.XSHG",
     "name": "纳指ETF",
-    "score": 1.421108,
-    "ann": 1.77116,
-    "r2": 0.80236,
-    "price": 2.4
+    "score": 1.429532,
+    "ann": 1.726804,
+    "r2": 0.827849,
+    "price": 2.375
   },
   "eligible": [
     {
       "code": "513100.XSHG",
       "name": "纳指ETF",
-      "score": 1.421108,
-      "ann": 1.77116,
-      "r2": 0.80236,
-      "price": 2.4
+      "score": 1.429532,
+      "ann": 1.726804,
+      "r2": 0.827849,
+      "price": 2.375
     },
     {
       "code": "513520.XSHG",
       "name": "日经ETF",
-      "score": 0.435086,
-      "ann": 0.895523,
-      "r2": 0.485846,
-      "price": 2.388
+      "score": 0.381666,
+      "ann": 0.790988,
+      "r2": 0.482518,
+      "price": 2.342
     },
     {
       "code": "511090.XSHG",
       "name": "30年国债ETF",
-      "score": 0.160456,
-      "ann": 0.199887,
-      "r2": 0.802735,
-      "price": 120.77
+      "score": 0.168387,
+      "ann": 0.207469,
+      "r2": 0.811626,
+      "price": 120.816
     }
   ],
   "excluded": [
     {
       "code": "513030.XSHG",
       "name": "德国ETF",
-      "score": -0.426103,
+      "score": -0.422727,
       "reason": "得分≤0"
     },
     {
@@ -67,21 +67,21 @@
     {
       "code": "511260.XSHG",
       "name": "10年国债ETF",
-      "score": -0.066283,
+      "score": -0.057595,
       "reason": "得分≤0"
     },
     {
       "code": "518880.XSHG",
       "name": "黄金ETF",
-      "score": -0.412984,
+      "score": -0.40095,
       "reason": "得分≤0"
     },
     {
       "code": "563020.XSHG",
       "name": "红利低波ETF",
-      "score": -0.00028,
-      "reason": "得分≤0"
+      "score": -0.000722,
+      "reason": "R²≤0(-0.0168)"
     }
   ],
-  "elapsed_sec": 24.9
+  "elapsed_sec": 23.4
 }
