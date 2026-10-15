@@ -1,11 +1,11 @@
 {
-  "time": "2026-10-14 10:18:48",
-  "data_date": "2026-10-14",
+  "time": "2026-10-15 10:02:36",
+  "data_date": "2026-10-15",
   "regime": "bear",
   "regime_label": "🔴 熊市",
   "max_score": 3,
   "momentum_days": 23,
-  "r2_median": 0.692245,
+  "r2_median": 0.670252,
   "use_weak_pool": true,
   "global_pool_count": 9,
   "pool_count": 29,
@@ -14,74 +14,76 @@
   "top_pick": {
     "code": "513100.XSHG",
     "name": "纳指ETF",
-    "score": 1.643939,
-    "ann": 1.936419,
-    "r2": 0.848958,
-    "price": 2.375
+    "score": 1.785942,
+    "ann": 2.055895,
+    "r2": 0.868693,
+    "price": 2.399
   },
   "eligible": [
     {
       "code": "513100.XSHG",
       "name": "纳指ETF",
-      "score": 1.643939,
-      "ann": 1.936419,
-      "r2": 0.848958,
-      "price": 2.375
+      "score": 1.785942,
+      "ann": 2.055895,
+      "r2": 0.868693,
+      "price": 2.399
     },
     {
       "code": "513520.XSHG",
       "name": "日经ETF",
-      "score": 0.38019,
-      "ann": 0.837444,
-      "r2": 0.453989,
-      "price": 2.342
+      "score": 0.345959,
+      "ann": 0.788717,
+      "r2": 0.438635,
+      "price": 2.347
     },
     {
       "code": "511090.XSHG",
       "name": "30年国债ETF",
-      "score": 0.175404,
-      "ann": 0.218821,
-      "r2": 0.801583,
-      "price": 120.816
+      "score": 0.189071,
+      "ann": 0.226809,
+      "r2": 0.833611,
+      "price": 120.806
+    },
+    {
+      "code": "563020.XSHG",
+      "name": "红利低波ETF",
+      "score": 0.007656,
+      "ann": 0.260232,
+      "r2": 0.029421,
+      "price": 1.212
     }
   ],
   "excluded": [
     {
       "code": "513030.XSHG",
       "name": "德国ETF",
-      "score": -0.418798,
+      "score": -0.431758,
       "reason": "得分≤0"
     },
     {
       "code": "159980.XSHE",
       "name": "有色ETF",
-      "score": -0.030247,
+      "score": -0.055475,
       "reason": "得分≤0"
     },
     {
       "code": "159985.XSHE",
       "name": "豆粕ETF",
-      "score": -0.267334,
+      "score": -0.219322,
       "reason": "得分≤0"
     },
     {
       "code": "511260.XSHG",
       "name": "10年国债ETF",
-      "score": -0.058482,
+      "score": -0.043511,
       "reason": "得分≤0"
     },
     {
       "code": "518880.XSHG",
       "name": "黄金ETF",
-      "score": -0.432994,
+      "score": -0.463015,
       "reason": "得分≤0"
-    },
-    {
-      "code": "563020.XSHG",
-      "name": "红利低波ETF",
-      "score": -0.002496,
-      "reason": "R²≤0(-0.0224)"
     }
   ],
-  "elapsed_sec": 18.6
+  "elapsed_sec": 18.9
 }
